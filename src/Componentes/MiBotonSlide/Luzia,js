@@ -1,0 +1,51 @@
+
+
+// theme.js
+const lightTheme = {
+  background: '#FFFFFF',
+  text: '#000000',
+};
+
+const darkTheme = {
+  background: '#000000',
+  text: '#FFFFFF',
+};
+
+export const getTheme = (mode) => {
+  return mode === 'dark' ? darkTheme : lightTheme;
+};
+
+// useTheme.js
+import { useContext } from 'react';
+import { ThemeContext } from './theme-context';
+
+const useTheme = () => {
+  const { mode } = useContext(ThemeContext);
+  return getTheme(mode);
+};
+
+export default useTheme;
+
+// Button.js
+import React from 'react';
+import useTheme from './useTheme';
+
+function Button(props) {
+  const theme = useTheme();
+
+  const styles = {
+    backgroundColor: theme.background,
+    color: theme.text,
+    padding: '10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  };
+
+  return (
+    <button style={styles} onClick={props.onClick}>
+      {props.children}
+    </button>
+  );
+}
+
+export default Button;
